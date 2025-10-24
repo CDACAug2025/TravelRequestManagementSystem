@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Approve Requests</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>Requests To Approve</h2>
+      <nav><a href="info.html">My Info</a><a href="new_request.html">New Request</a><a href="all_requests.html">My
+          Requests</a><a href="create_employee.html">Create Employee</a><a class="logout" href="#"
+          onclick="logout()">Logout</a></nav>
+    </div>
+    <div id="tableArea"></div>
+  </div>
+  <script src="../js/mock_data.js"></script>
+  <script src="../js/shared.js"></script>
+  <script>
+    (function () {
+      const u = getLoggedIn(); if (!u) { location = '/index.html'; return; }
+      const data = getStoredData();
+      // requests assigned to this manager (approver_id equals manager id) OR requests by their direct reports
+      const myPending = data.requests.filter(r => (r.approver_id === u.employee_id) || ((findEmployeeById(r.employee_id) || {}).manager_id === u.employee_id));
+      const el = document.getElementById('tableArea');
+      if (!myPending.length) { el.innerHTML = '<p>No requests to approve.</p>'; return; }
+      let html = '<table><thead><tr><th>ID</th><th>Employee</th><th>Date</th><th>Reason</th><th>Status</th><th>Est Cost</th><th>Action</th></tr></thead><tbody>';
+      myPending.forEach(r => {
+        const emp = findEmployeeById(r.employee_id);
+        html += `<tr><td>${r.request_id}</td><td>${emp.first_name} ${emp.last_name}</td><td>${r.request_date}</td><td>${r.reason}</td><td id="st${r.request_id}">${r.status}</td><td>${r.estimated_cost.toFixed(2)}</td><td class="actions"><button onclick="decide(${r.request_id},true)" class="small">Approve</button><button onclick="decide(${r.request_id},false)" class="small">Reject</button></td></tr>`;
+      });
+      html += '</tbody></table>';
+      el.innerHTML = html;
+      window.decide = function (id, approve) {
+        const data = getStoredData();
+        const r = data.requests.find(x => x.request_id === id);
+        if (!r) return alert('Not found');
+        r.status = approve ? 'APPROVED' : 'REJECTED';
+        r.approver_id = u.employee_id;
+        r.approval_date = new Date().toISOString().slice(0, 10);
+        Object.assign(MOCK_DATA, data); persistData();
+        document.getElementById('st' + id).textContent = r.status;
+      };
+    })();
+  </script>
+</body>
+
+</html>

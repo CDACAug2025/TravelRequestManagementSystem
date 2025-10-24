@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Create Employee</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>Create Employee</h2>
+      <nav><a href="info.html">My Info</a><a href="new_request.html">New Request</a><a href="all_requests.html">My
+          Requests</a><a href="approve_requests.html">Approve Requests</a><a class="logout" href="#"
+          onclick="logout()">Logout</a></nav>
+    </div>
+    <div id="form">
+      <label>First Name</label><input id="first">
+      <label>Last Name</label><input id="last">
+      <label>Email</label><input id="email">
+      <label>Department</label><input id="dept">
+      <label>Manager ID (optional)</label><input id="manager">
+      <label>Role (Employee/Manager)</label><input id="role" value="Employee">
+      <button id="create" class="small">Create</button>
+      <div id="msg" style="display:none" class="message"></div>
+    </div>
+  </div>
+  <script src="../js/mock_data.js"></script>
+  <script src="../js/shared.js"></script>
+  <script>
+    (function () {
+      const u = getLoggedIn(); if (!u) { location = '/index.html'; return; }
+      document.getElementById('create').addEventListener('click', function () {
+        const data = getStoredData();
+        const fn = document.getElementById('first').value.trim(), ln = document.getElementById('last').value.trim(), email = document.getElementById('email').value.trim();
+        if (!fn || !ln || !email) { alert('fill required'); return; }
+        const newId = (data.employees.reduce((m, e) => Math.max(m, e.employee_id || 0), 0) || 0) + 1;
+        const emp = { employee_id: newId, first_name: fn, last_name: ln, email: email, department_id: (parseInt(document.getElementById('dept').value) || 0), manager_id: (document.getElementById('manager').value ? parseInt(document.getElementById('manager').value) : null), department_name: document.getElementById('dept').value || '', role: document.getElementById('role').value || 'Employee' };
+        data.employees.push(emp);
+        data.login_credentials.push({ employee_id: newId, email: email, password: 'password123', role: emp.role });
+        Object.assign(MOCK_DATA, data); persistData();
+        document.getElementById('msg').style.display = 'block'; document.getElementById('msg').textContent = 'Employee created id=' + newId;
+      });
+    })();
+  </script>
+</body>
+
+</html>

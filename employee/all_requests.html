@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>My Requests</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>My Travel Requests</h2>
+      <nav><a href="info.html">My Info</a><a href="new_request.html">New Request</a><a class="logout" href="#"
+          onclick="logout()">Logout</a></nav>
+    </div>
+    <div id="tableArea"></div>
+  </div>
+  <script src="../js/mock_data.js"></script>
+  <script src="../js/shared.js"></script>
+  <script>
+    (function () {
+      const u = getLoggedIn(); if (!u) { location = '/index.html'; return; }
+      const data = getStoredData();
+      const my = data.requests.filter(r => r.employee_id === u.employee_id);
+      const el = document.getElementById('tableArea');
+      if (!my.length) { el.innerHTML = '<p>No requests yet.</p>'; return; }
+      let html = '<table><thead><tr><th>ID</th><th>Date</th><th>Reason</th><th>Status</th><th>Est Cost</th><th>Details</th></tr></thead><tbody>';
+      my.forEach(r => {
+        html += `<tr><td>${r.request_id}</td><td>${r.request_date}</td><td>${r.reason}</td><td>${r.status}</td><td>${r.estimated_cost.toFixed(2)}</td><td><button onclick="show(${r.request_id})" class="small">View</button></td></tr>`;
+      });
+      html += '</tbody></table><div id="detail"></div>';
+      el.innerHTML = html;
+      window.show = function (id) {
+        const r = data.requests.find(x => x.request_id === id);
+        const its = data.itineraries.filter(i => i.request_id === id);
+        let out = `<h4>Request ${id}</h4><p><strong>Reason:</strong> ${r.reason}</p><p><strong>Status:</strong> ${r.status}</p><p><strong>Itineraries:</strong></p>`;
+        if (its.length) { out += '<ul>' + its.map(i => `<li>${i.type} ${i.departure_city}→${i.arrival_city} (${i.start_date} to ${i.end_date}) — ₹${i.cost.toFixed(2)} — ${i.notes}</li>`).join('') + '</ul>' } else out += '<p>None</p>';
+        document.getElementById('detail').innerHTML = out;
+      }
+    })();
+  </script>
+</body>
+
+</html>
