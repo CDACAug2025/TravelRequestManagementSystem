@@ -1,0 +1,149 @@
+/* ========== General ========== */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f9fc;
+  color: #333;
+}
+
+/* ========== Header ========== */
+header {
+  background-color: #004aad;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 2em;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+header img {
+  height: 50px;
+}
+header h1 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+/* ========== Intro ========== */
+.intro {
+  text-align: center;
+  padding: 2em 1em;
+  background: #e9f0ff;
+}
+.intro h2 {
+  margin-bottom: 0.5em;
+}
+
+/* ========== Main Layout ========== */
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 2em;
+  gap: 2em;
+}
+.left, .right {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 1.5em;
+  flex: 1 1 400px;
+  max-width: 600px;
+}
+.left h3, .right h3 {
+  color: #004aad;
+  margin-top: 0;
+}
+
+/* ========== Gallery ========== */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1em;
+}
+.gallery img {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* ========== Login Form ========== */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+}
+#login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+}
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+button {
+  background-color: #004aad;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  margin-top: 10px;
+}
+button:hover {
+  background-color: #003680;
+}
+
+/* ========== How-To Section ========== */
+.how-to {
+  background: #ffffff;
+  padding: 2em;
+  text-align: center;
+  border-top: 2px solid #e0e0e0;
+}
+.how-to h2 {
+  color: #004aad;
+  margin-bottom: 0.5em;
+}
+.how-to p {
+  margin-bottom: 1em;
+}
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5em;
+}
+.step {
+  background: #f7f9fc;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 1em;
+  width: 250px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.step h4 {
+  color: #004aad;
+  margin-bottom: 0.3em;
+}
+
+/* ========== Footer ========== */
+footer {
+  background-color: #004aad;
+  color: white;
+  text-align: center;
+  padding: 1.5em;
+  margin-top: 2em;
+}

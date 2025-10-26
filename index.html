@@ -1,20 +1,93 @@
-<!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><title>Login | Travel Portal</title>
-<link rel="stylesheet" href="css/style.css">
-</head><body>
-<div class="container">
-  <div class="header"><h2>Employee Travel Portal</h2></div>
-  <form id="loginForm">
-    <label>Email</label>
-    <input type="email" id="email" required placeholder="you@company.in">
-    <label>Password</label>
-    <input type="password" id="password" required placeholder="password123">
-    <button type="submit" class="small">Login</button>
-  </form>
-  <p id="error" class="message" style="display:none;color:#b00020;background:#ffecec;border-color:#f5c6cb"></p>
-  <div class="footer">Test accounts: password is <strong>password123</strong> for demo users.</div>
-</div>
-<script src="js/mock_data.js"></script>
-<script src="js/login.js"></script>
-</body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team 45 | Travel Request Management</title>
+    <link rel="stylesheet" href="css/indexstyle.css" />
+</head>
+
+<body>
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" alt="Company Logo">
+        <h1>Team 45 | Travel Request Management Portal</h1>
+    </header>
+
+    <section class="intro">
+        <h2>Welcome to the Travel Request Management System</h2>
+        <p>This is a separate travel request management website designed for Team 45 employees and managers to submit,
+            track, and approve travel requests easily.</p>
+    </section>
+
+    <section class="main">
+        <div class="left">
+            <h3>About Us</h3>
+            <p>Team 45 is a dynamic group of professionals working towards smarter and more efficient corporate travel
+                management. Our system simplifies travel requests, ensures transparent approvals, and helps manage
+                travel budgets effectively.</p>
+
+            <div class="gallery">
+                <img src="https://picsum.photos/200/120?random=1" alt="Office">
+                <img src="https://picsum.photos/200/120?random=2" alt="Team">
+                <img src="https://picsum.photos/200/120?random=3" alt="Travel">
+                <img src="https://picsum.photos/200/120?random=4" alt="Meeting">
+            </div>
+        </div>
+
+        <div class="right">
+            <h3>Get Started</h3>
+
+            <form id="loginForm">
+            <label>Email</label>
+            <input type="email" id="email" required placeholder="you@company.in">
+            <label>Password</label>
+            <input type="password" id="password" required placeholder="password123">
+            <button type="submit" class="small">Login</button>
+            </form>
+            <p id="error" class="message" style="display:none;color:#b00020;background:#ffecec;border-color:#f5c6cb">
+            </p>
+            <div class="footer">Test accounts: password is <strong>password123</strong> for demo users.</div>
+        </div>
+    </section>
+
+    <section class="how-to">
+        <h2>How to Request Travel</h2>
+        <p>Follow these easy steps to submit your travel request and get approval:</p>
+        <div class="steps">
+            <div class="step">
+                <h4>1. Login</h4>
+                <p>Use your registered email and password to access your dashboard.</p>
+            </div>
+            <div class="step">
+                <h4>2. Create a New Request</h4>
+                <p>Go to “New Travel Request” and fill in your travel purpose, destination, and estimated cost.</p>
+            </div>
+            <div class="step">
+                <h4>3. Add Itinerary</h4>
+                <p>Include travel details such as flights, hotels, or trains with dates and costs.</p>
+            </div>
+            <div class="step">
+                <h4>4. Submit for Approval</h4>
+                <p>Your manager will review your request and approve or reject it.</p>
+            </div>
+            <div class="step">
+                <h4>5. Track Status</h4>
+                <p>Monitor your request status and approval history from your dashboard.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p><strong>Team 45 Headquarters</strong><br>
+            123 Corporate Park, Bengaluru, India<br>
+            Email: contact@team45.com | Phone: +91 98765 43210</p>
+        <p>&copy; 2025 Team 45. All rights reserved.</p>
+    </footer>
+
+    <script src="js/mock_data.js"></script>
+    <script src="js/login.js"></script>
+
+</body>
+
+</html>
