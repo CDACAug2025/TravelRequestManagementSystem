@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Travel Portal Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        <i class="fas fa-plane-departure"></i>
+        <h2>Travel Portal Dashboard</h2>
+      </div>
+      <nav>
+        <a href="info.html"><i class="fas fa-user"></i> My Info</a>
+        <a href="new_request.html"><i class="fas fa-plus-circle"></i> New Request</a>
+        <a href="all_requests.html"><i class="fas fa-list"></i> My Requests</a>
+        <a href="approve_requests.html"><i class="fas fa-check-circle"></i> Approve Requests</a>
+        <a class="logout" href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </div>
+    
+    <div id="content">
+      <div class="hero">
+        <h1>Welcome to Your Travel Portal</h1>
+        <p>Manage your travel requests, itineraries, and approvals in one place</p>
+        <a href="new_request.html" class="btn"><i class="fas fa-plus-circle"></i> Create New Request</a>
+      </div>
+      
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-value">5</div>
+          <div class="stat-label">Pending Requests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">12</div>
+          <div class="stat-label">Approved Requests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">3</div>
+          <div class="stat-label">Requests to Approve</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">₹24,560</div>
+          <div class="stat-label">Total Travel Cost</div>
+        </div>
+      </div>
+      
+      <div class="quick-actions">
+        <a href="new_request.html" class="action-card">
+          <i class="fas fa-plus-circle"></i>
+          <h3>New Request</h3>
+          <p>Create a new travel request</p>
+        </a>
+        <a href="all_requests.html" class="action-card">
+          <i class="fas fa-list"></i>
+          <h3>My Requests</h3>
+          <p>View all your requests</p>
+        </a>
+        <a href="approve_requests.html" class="action-card">
+          <i class="fas fa-check-circle"></i>
+          <h3>Approve Requests</h3>
+          <p>Review pending requests</p>
+        </a>
+        <a href="info.html" class="action-card">
+          <i class="fas fa-user"></i>
+          <h3>My Profile</h3>
+          <p>View your information</p>
+        </a>
+      </div>
+      
+      <div class="travel-images">
+        <div class="travel-img">
+          <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Beach Destination">
+        </div>
+        <div class="travel-img">
+          <img src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Mountain Destination">
+        </div>
+        <div class="travel-img">
+          <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="City Destination">
+        </div>
+        <div class="travel-img">
+          <img src="https://images.unsplash.com/photo-1549294413-26f195200c16?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Travel Adventure">
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>Travel Portal &copy; 2023 | Simplifying Business Travel Management</p>
+    </div>
+  </div>
+
+  <script src="../js/mock_data.js"></script>
+  <script src="../js/shared.js"></script>
+  <script>
+    // Simple JavaScript for interactive elements
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add hover effect to action cards
+      const actionCards = document.querySelectorAll('.action-card');
+      actionCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-5px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+        });
+      });
+
+      // Add hover effect to stat cards
+      const statCards = document.querySelectorAll('.stat-card');
+      statCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-5px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+        });
+      });
+
+      // Update stats with real data if user is logged in
+      const user = getLoggedIn();
+      if (user) {
+        const data = getStoredData();
+        
+        // Count user's pending requests
+        const pendingRequests = data.requests.filter(r => 
+          r.employee_id === user.employee_id && r.status === 'PENDING'
+        ).length;
+        
+        // Count user's approved requests
+        const approvedRequests = data.requests.filter(r => 
+          r.employee_id === user.employee_id && r.status === 'APPROVED'
+        ).length;
+        
+        // Count requests to approve (for managers)
+        const requestsToApprove = data.requests.filter(r => 
+          r.status === 'PENDING' && 
+          (r.approver_id === user.employee_id || 
+           (findEmployeeById(r.employee_id) || {}).manager_id === user.employee_id)
+        ).length;
+        
+        // Calculate total travel cost
+        const totalCost = data.requests
+          .filter(r => r.employee_id === user.employee_id && r.status === 'APPROVED')
+          .reduce((sum, r) => sum + r.estimated_cost, 0);
+        
+        // Update the stats cards
+        document.querySelectorAll('.stat-card')[0].querySelector('.stat-value').textContent = pendingRequests;
+        document.querySelectorAll('.stat-card')[1].querySelector('.stat-value').textContent = approvedRequests;
+        document.querySelectorAll('.stat-card')[2].querySelector('.stat-value').textContent = requestsToApprove;
+        document.querySelectorAll('.stat-card')[3].querySelector('.stat-value').textContent = `₹${totalCost.toFixed(2)}`;
+      }
+    });
+
+    // Add logout functionality
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('loggedInUser');
+        window.location.href = '/index.html';
+      }
+    }
+  </script>
+</body>
+</html>
