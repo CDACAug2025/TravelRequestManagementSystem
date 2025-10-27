@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>My Info</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 
@@ -11,10 +12,15 @@
   <div class="container" id="main">
     <div class="header">
       <h2>My Profile</h2>
-      <nav><a href="new_request.html">New Travel Request</a><a href="all_requests.html">My Requests</a><a class="logout"
-          href="#" onclick="logout()">Logout</a></nav>
+      <nav>
+        <a href="new_request.html">New Travel Request</a>
+        <a href="all_requests.html">My Requests</a>
+        <a class="logout" href="#" onclick="logout()">Logout</a>
+      </nav>
     </div>
-    <div id="content"></div>
+    <div id="content" class="card">
+      <!-- Content will be loaded by employee_info.js -->
+    </div>
   </div>
   <script src="../js/mock_data.js"></script>
   <script src="../js/shared.js"></script>

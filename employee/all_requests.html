@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>My Requests</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 
@@ -11,10 +12,18 @@
   <div class="container">
     <div class="header">
       <h2>My Travel Requests</h2>
-      <nav><a href="info.html">My Info</a><a href="new_request.html">New Request</a><a class="logout" href="#"
-          onclick="logout()">Logout</a></nav>
+      <nav>
+        <a href="info.html">My Info</a>
+        <a href="new_request.html">New Request</a>
+        <a class="logout" href="#" onclick="logout()">Logout</a>
+      </nav>
     </div>
-    <div id="tableArea"></div>
+    <div id="tableArea" class="card">
+      <div class="card-header">
+        <h3 class="card-title">My Travel Requests</h3>
+      </div>
+      <!-- Table content will be inserted here by JavaScript -->
+    </div>
   </div>
   <script src="../js/mock_data.js"></script>
   <script src="../js/shared.js"></script>
@@ -24,18 +33,52 @@
       const data = getStoredData();
       const my = data.requests.filter(r => r.employee_id === u.employee_id);
       const el = document.getElementById('tableArea');
-      if (!my.length) { el.innerHTML = '<p>No requests yet.</p>'; return; }
+      if (!my.length) { 
+        el.innerHTML += '<p class="message info">No travel requests yet.</p>'; 
+        return; 
+      }
       let html = '<table><thead><tr><th>ID</th><th>Date</th><th>Reason</th><th>Status</th><th>Est Cost</th><th>Details</th></tr></thead><tbody>';
       my.forEach(r => {
-        html += `<tr><td>${r.request_id}</td><td>${r.request_date}</td><td>${r.reason}</td><td>${r.status}</td><td>${r.estimated_cost.toFixed(2)}</td><td><button onclick="show(${r.request_id})" class="small">View</button></td></tr>`;
+        const statusClass = `status-${r.status.toLowerCase()}`;
+        html += `<tr>
+          <td>${r.request_id}</td>
+          <td>${r.request_date}</td>
+          <td>${r.reason}</td>
+          <td><span class="status-badge ${statusClass}">${r.status}</span></td>
+          <td>₹${r.estimated_cost.toFixed(2)}</td>
+          <td><button onclick="show(${r.request_id})" class="btn small">View</button></td>
+        </tr>`;
       });
-      html += '</tbody></table><div id="detail"></div>';
-      el.innerHTML = html;
+      html += '</tbody></table><div id="detail" class="card"></div>';
+      el.innerHTML += html;
+      
       window.show = function (id) {
         const r = data.requests.find(x => x.request_id === id);
         const its = data.itineraries.filter(i => i.request_id === id);
-        let out = `<h4>Request ${id}</h4><p><strong>Reason:</strong> ${r.reason}</p><p><strong>Status:</strong> ${r.status}</p><p><strong>Itineraries:</strong></p>`;
-        if (its.length) { out += '<ul>' + its.map(i => `<li>${i.type} ${i.departure_city}→${i.arrival_city} (${i.start_date} to ${i.end_date}) — ₹${i.cost.toFixed(2)} — ${i.notes}</li>`).join('') + '</ul>' } else out += '<p>None</p>';
+        const statusClass = `status-${r.status.toLowerCase()}`;
+        let out = `
+          <div class="card-header">
+            <h4 class="card-title">Request Details #${id}</h4>
+          </div>
+          <div class="form-group">
+            <p><strong>Reason:</strong> ${r.reason}</p>
+            <p><strong>Status:</strong> <span class="status-badge ${statusClass}">${r.status}</span></p>
+            <p><strong>Estimated Cost:</strong> ₹${r.estimated_cost.toFixed(2)}</p>
+          </div>
+          <div class="form-group">
+            <h4>Itineraries</h4>`;
+        if (its.length) { 
+          out += '<div class="card">' + its.map(i => `
+            <p><strong>${i.type}</strong>: ${i.departure_city} → ${i.arrival_city}</p>
+            <p>Dates: ${i.start_date} to ${i.end_date}</p>
+            <p>Cost: ₹${i.cost.toFixed(2)}</p>
+            <p>Notes: ${i.notes}</p>
+            <hr>
+          `).join('') + '</div>'; 
+        } else { 
+          out += '<p class="message info">No itineraries added.</p>'; 
+        }
+        out += '</div>';
         document.getElementById('detail').innerHTML = out;
       }
     })();

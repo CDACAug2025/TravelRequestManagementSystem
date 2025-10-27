@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>New Request</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 
@@ -11,21 +12,60 @@
   <div class="container">
     <div class="header">
       <h2>New Travel Request</h2>
-      <nav><a href="info.html">My Info</a><a href="all_requests.html">My Requests</a><a class="logout" href="#"
-          onclick="logout()">Logout</a></nav>
+      <nav>
+        <a href="info.html">My Info</a>
+        <a href="all_requests.html">My Requests</a>
+        <a class="logout" href="#" onclick="logout()">Logout</a>
+      </nav>
     </div>
-    <div id="formArea">
-      <label>Reason</label><textarea id="reason"></textarea>
-      <label>Estimated Cost</label><input id="est_cost" type="number" step="0.01">
-      <h4>Itinerary (one row)</h4>
-      <label>Type (FLIGHT/HOTEL/TRAIN)</label><input id="it_type">
-      <label>From</label><input id="from_city">
-      <label>To</label><input id="to_city">
-      <label>Start Date</label><input id="start_date" type="date">
-      <label>End Date</label><input id="end_date" type="date">
-      <label>Cost</label><input id="it_cost" type="number" step="0.01">
-      <label>Notes</label><input id="it_notes">
-      <button id="submit" class="small">Submit Request</button>
+    <div id="formArea" class="card">
+      <div class="card-header">
+        <h3 class="card-title">Create New Travel Request</h3>
+      </div>
+      <div class="form-group">
+        <label>Reason</label>
+        <textarea id="reason" placeholder="Enter reason for travel"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Estimated Cost (₹)</label>
+        <input id="est_cost" type="number" step="0.01" placeholder="0.00">
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Itinerary Details</h4>
+        </div>
+        <div class="form-group">
+          <label>Type (FLIGHT/HOTEL/TRAIN)</label>
+          <input id="it_type" placeholder="FLIGHT">
+        </div>
+        <div class="form-group">
+          <label>From City</label>
+          <input id="from_city" placeholder="Departure city">
+        </div>
+        <div class="form-group">
+          <label>To City</label>
+          <input id="to_city" placeholder="Arrival city">
+        </div>
+        <div class="form-group">
+          <label>Start Date</label>
+          <input id="start_date" type="date">
+        </div>
+        <div class="form-group">
+          <label>End Date</label>
+          <input id="end_date" type="date">
+        </div>
+        <div class="form-group">
+          <label>Cost (₹)</label>
+          <input id="it_cost" type="number" step="0.01" placeholder="0.00">
+        </div>
+        <div class="form-group">
+          <label>Notes</label>
+          <input id="it_notes" placeholder="Additional notes">
+        </div>
+      </div>
+      
+      <button id="submit" class="btn success">Submit Request</button>
       <div id="msg" style="display:none" class="message"></div>
     </div>
   </div>
@@ -37,21 +77,47 @@
       document.getElementById('submit').addEventListener('click', function () {
         const reason = document.getElementById('reason').value.trim();
         const est = parseFloat(document.getElementById('est_cost').value) || 0;
-        if (!reason) { alert('Please enter reason'); return; }
+        if (!reason) { 
+          alert('Please enter reason'); 
+          return; 
+        }
         const data = getStoredData();
-        // new request id
         const newId = (data.requests.reduce((m, r) => Math.max(m, r.request_id || 0), 0) || 0) + 1;
-        const req = { request_id: newId, employee_id: u.employee_id, request_date: new Date().toISOString().slice(0, 10), reason: reason, status: 'PENDING', estimated_cost: est, approver_id: findEmployeeById(u.employee_id).manager_id || null, approval_date: null };
+        const req = { 
+          request_id: newId, 
+          employee_id: u.employee_id, 
+          request_date: new Date().toISOString().slice(0, 10), 
+          reason: reason, 
+          status: 'PENDING', 
+          estimated_cost: est, 
+          approver_id: findEmployeeById(u.employee_id).manager_id || null, 
+          approval_date: null 
+        };
         data.requests.push(req);
-        // add itinerary
+        
         const itId = (data.itineraries.reduce((m, it) => Math.max(m, it.itinerary_id || 0), 0) || 0) + 1;
-        const it = { itinerary_id: itId, request_id: newId, type: document.getElementById('it_type').value || 'FLIGHT', departure_city: document.getElementById('from_city').value || '', arrival_city: document.getElementById('to_city').value || '', start_date: document.getElementById('start_date').value || '', end_date: document.getElementById('end_date').value || '', cost: parseFloat(document.getElementById('it_cost').value) || 0, notes: document.getElementById('it_notes').value || '' };
+        const it = { 
+          itinerary_id: itId, 
+          request_id: newId, 
+          type: document.getElementById('it_type').value || 'FLIGHT', 
+          departure_city: document.getElementById('from_city').value || '', 
+          arrival_city: document.getElementById('to_city').value || '', 
+          start_date: document.getElementById('start_date').value || '', 
+          end_date: document.getElementById('end_date').value || '', 
+          cost: parseFloat(document.getElementById('it_cost').value) || 0, 
+          notes: document.getElementById('it_notes').value || '' 
+        };
         data.itineraries.push(it);
-        // persist
+        
         Object.assign(MOCK_DATA, data);
         persistData();
-        const m = document.getElementById('msg'); m.style.display = 'block'; m.textContent = 'Request submitted (id=' + newId + ')';
-        setTimeout(() => { location = 'all_requests.html'; }, 1000);
+        
+        const m = document.getElementById('msg'); 
+        m.style.display = 'block'; 
+        m.className = 'message success';
+        m.textContent = 'Request submitted successfully! Request ID: ' + newId;
+        
+        setTimeout(() => { location = 'all_requests.html'; }, 1500);
       });
     })();
   </script>

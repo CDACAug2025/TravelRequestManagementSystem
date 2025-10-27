@@ -6,88 +6,367 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Team 45 | Travel Request Management</title>
     <link rel="stylesheet" href="css/indexstyle.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
     <header>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" alt="Company Logo">
-        <h1>Team 45 | Travel Request Management Portal</h1>
+        <nav class="main-nav">
+            <div class="nav-container">
+                <div class="logo-container">
+                    <img src="css/logo.png.jpg" alt="Company Logo">
+                    <div class="logo-text">
+                        <h1>Travel Request Management</h1>
+                        <div class="tagline">Team 45 - Simplifying Corporate Travel</div>
+                    </div>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-to">How It Works</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <section class="intro">
-        <h2>Welcome to the Travel Request Management System</h2>
-        <p>This is a separate travel request management website designed for Team 45 employees and managers to submit,
-            track, and approve travel requests easily.</p>
-    </section>
-
-    <section class="main">
-        <div class="left">
-            <h3>About Us</h3>
-            <p>Team 45 is a dynamic group of professionals working towards smarter and more efficient corporate travel
-                management. Our system simplifies travel requests, ensures transparent approvals, and helps manage
-                travel budgets effectively.</p>
-
-            <div class="gallery">
-                <img src="https://picsum.photos/200/120?random=1" alt="Office">
-                <img src="https://picsum.photos/200/120?random=2" alt="Team">
-                <img src="https://picsum.photos/200/120?random=3" alt="Travel">
-                <img src="https://picsum.photos/200/120?random=4" alt="Meeting">
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Streamlined Travel Management</h2>
+            <p>Submit, track, and approve travel requests with our intuitive platform designed for modern businesses.</p>
+            <div class="hero-buttons">
+                <a href="#login" class="btn-primary">Get Started</a>
+                <a href="#features" class="btn-secondary">Learn More</a>
             </div>
         </div>
-
-        <div class="right">
-            <h3>Get Started</h3>
-
-            <form id="loginForm">
-            <label>Email</label>
-            <input type="email" id="email" required placeholder="you@company.in">
-            <label>Password</label>
-            <input type="password" id="password" required placeholder="password123">
-            <button type="submit" class="small">Login</button>
-            </form>
-            <p id="error" class="message" style="display:none;color:#b00020;background:#ffecec;border-color:#f5c6cb">
-            </p>
-            <div class="footer">Test accounts: password is <strong>password123</strong> for demo users.</div>
-        </div>
-    </section>
-
-    <section class="how-to">
-        <h2>How to Request Travel</h2>
-        <p>Follow these easy steps to submit your travel request and get approval:</p>
-        <div class="steps">
-            <div class="step">
-                <h4>1. Login</h4>
-                <p>Use your registered email and password to access your dashboard.</p>
-            </div>
-            <div class="step">
-                <h4>2. Create a New Request</h4>
-                <p>Go to “New Travel Request” and fill in your travel purpose, destination, and estimated cost.</p>
-            </div>
-            <div class="step">
-                <h4>3. Add Itinerary</h4>
-                <p>Include travel details such as flights, hotels, or trains with dates and costs.</p>
-            </div>
-            <div class="step">
-                <h4>4. Submit for Approval</h4>
-                <p>Your manager will review your request and approve or reject it.</p>
-            </div>
-            <div class="step">
-                <h4>5. Track Status</h4>
-                <p>Monitor your request status and approval history from your dashboard.</p>
+        <div class="hero-visual">
+            <div class="dashboard-preview">
+                <div class="preview-header"></div>
+                <div class="preview-content">
+                    <div class="preview-card"></div>
+                    <div class="preview-card"></div>
+                    <div class="preview-chart"></div>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <p><strong>Team 45 Headquarters</strong><br>
-            123 Corporate Park, Bengaluru, India<br>
-            Email: contact@team45.com | Phone: +91 98765 43210</p>
-        <p>&copy; 2025 Team 45. All rights reserved.</p>
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Why Choose Our Platform</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Fast Processing</h3>
+                    <p>Reduce approval times by up to 70% with our automated workflow system.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Budget Control</h3>
+                    <p>Track expenses in real-time and stay within your travel budget.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Access the platform from any device, anywhere, at any time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure & Compliant</h3>
+                    <p>Enterprise-grade security with compliance to corporate policies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="1500">0</div>
+                    <div class="stat-label">Travel Requests Processed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="98">0</div>
+                    <div class="stat-label">User Satisfaction (%)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="45">0</div>
+                    <div class="stat-label">Average Approval Time (Hours)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="25">0</div>
+                    <div class="stat-label">Cost Savings (%)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="main" id="login">
+        <div class="container">
+            <div class="main-content">
+                <div class="left">
+                    <h3>About Our System</h3>
+                    <p>Team 45's Travel Request Management System revolutionizes how companies handle employee travel. Our platform provides:</p>
+                    <ul class="benefits-list">
+                        <li><i class="fas fa-check-circle"></i> Streamlined approval workflows</li>
+                        <li><i class="fas fa-check-circle"></i> Real-time expense tracking</li>
+                        <li><i class="fas fa-check-circle"></i> Integrated travel policy enforcement</li>
+                        <li><i class="fas fa-check-circle"></i> Comprehensive reporting and analytics</li>
+                        <li><i class="fas fa-check-circle"></i> Mobile accessibility for on-the-go approvals</li>
+                    </ul>
+
+                    <div class="video-demo">
+                        <h4>See How It Works</h4>
+                        <div class="video-placeholder">
+                            <i class="fas fa-play-circle"></i>
+                            <p>2-minute platform overview</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right">
+                    <div class="login-card">
+                        <h3>Access Your Account</h3>
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" required placeholder="you@company.in">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" required placeholder="Enter your password">
+                                <div class="password-strength">
+                                    <div class="strength-bar"></div>
+                                </div>
+                            </div>
+                            <div class="form-options">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="remember">
+                                    <span class="checkmark"></span>
+                                    Remember me
+                                </label>
+                                <a href="#" class="forgot-password">Forgot password?</a>
+                            </div>
+                            <button type="submit" class="btn-login">
+                                <span class="btn-text">Login</span>
+                                <div class="btn-loader"></div>
+                            </button>
+                        </form>
+                        <div class="social-login">
+                            <p>Or continue with</p>
+                            <div class="social-buttons">
+                                <button class="social-btn google">
+                                    <i class="fab fa-google"></i>
+                                </button>
+                                <button class="social-btn microsoft">
+                                    <i class="fab fa-microsoft"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <p id="error" class="message" style="display:none;"></p>
+                        <div class="footer">Test accounts: password is <strong>password123</strong> for demo users.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-to" id="how-to">
+        <div class="container">
+            <h2>How to Request Travel</h2>
+            <p>Follow these easy steps to submit your travel request and get approval:</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Login</h4>
+                        <p>Use your registered email and password to access your dashboard.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Create a New Request</h4>
+                        <p>Go to "New Travel Request" and fill in your travel purpose, destination, and estimated cost.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Add Itinerary</h4>
+                        <p>Include travel details such as flights, hotels, or trains with dates and costs.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Submit for Approval</h4>
+                        <p>Your manager will review your request and approve or reject it.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Track Status</h4>
+                        <p>Monitor your request status and approval history from your dashboard.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2>What Our Users Say</h2>
+            <div class="testimonial-carousel">
+                <div class="testimonial active">
+                    <div class="testimonial-content">
+                        <p>"This system has cut our travel request processing time by more than half. The intuitive interface makes it easy for everyone to use."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson">
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Finance Manager</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"As a frequent traveler, I appreciate how easy it is to submit requests and track their status. The mobile access is a game-changer."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen">
+                        <div class="author-info">
+                            <h4>Michael Chen</h4>
+                            <p>Sales Director</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"The reporting features have given us incredible insights into our travel spending. We've identified areas to save over 20% on travel costs."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya Sharma">
+                        <div class="author-info">
+                            <h4>Priya Sharma</h4>
+                            <p>Operations Head</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-btn next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How do I reset my password?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Click on the "Forgot password" link on the login page. You'll receive an email with instructions to reset your password.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Can I modify a travel request after submission?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, you can modify pending requests. Once approved, changes require manager approval. Canceled requests can be edited and resubmitted.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>What types of expenses can I include in my request?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can include flights, accommodation, ground transportation, meals, and other business-related expenses as per your company's travel policy.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How long does approval typically take?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Approval times vary but average 1-2 business days. Urgent requests can be expedited by contacting your manager directly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Team 45 Headquarters</h3>
+                    <p>123 Corporate Park, Bengaluru, India</p>
+                    <p>Email: contact@team45.com</p>
+                    <p>Phone: +91 98765 43210</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-to">How It Works</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe for updates and tips</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Team 45. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
     <script src="js/mock_data.js"></script>
     <script src="js/login.js"></script>
-
+    <script src="js/animations.js"></script>
 </body>
 
 </html>
