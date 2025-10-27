@@ -52,35 +52,7 @@
       html += '</tbody></table><div id="detail" class="card"></div>';
       el.innerHTML += html;
       
-      window.show = function (id) {
-        const r = data.requests.find(x => x.request_id === id);
-        const its = data.itineraries.filter(i => i.request_id === id);
-        const statusClass = `status-${r.status.toLowerCase()}`;
-        let out = `
-          <div class="card-header">
-            <h4 class="card-title">Request Details #${id}</h4>
-          </div>
-          <div class="form-group">
-            <p><strong>Reason:</strong> ${r.reason}</p>
-            <p><strong>Status:</strong> <span class="status-badge ${statusClass}">${r.status}</span></p>
-            <p><strong>Estimated Cost:</strong> ₹${r.estimated_cost.toFixed(2)}</p>
-          </div>
-          <div class="form-group">
-            <h4>Itineraries</h4>`;
-        if (its.length) { 
-          out += '<div class="card">' + its.map(i => `
-            <p><strong>${i.type}</strong>: ${i.departure_city} → ${i.arrival_city}</p>
-            <p>Dates: ${i.start_date} to ${i.end_date}</p>
-            <p>Cost: ₹${i.cost.toFixed(2)}</p>
-            <p>Notes: ${i.notes}</p>
-            <hr>
-          `).join('') + '</div>'; 
-        } else { 
-          out += '<p class="message info">No itineraries added.</p>'; 
-        }
-        out += '</div>';
-        document.getElementById('detail').innerHTML = out;
-      }
+     
     })();
   </script>
 </body>

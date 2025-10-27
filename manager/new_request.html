@@ -31,23 +31,66 @@
   </div>
   <script src="../js/mock_data.js"></script>
   <script src="../js/shared.js"></script>
-  <script>
-    (function () {
-      const u = getLoggedIn(); if (!u) { location = '/index.html'; return; }
-      document.getElementById('submit').addEventListener('click', function () {
-        const reason = document.getElementById('reason').value.trim(); const est = parseFloat(document.getElementById('est_cost').value) || 0;
-        if (!reason) { alert('Enter reason'); return; }
-        const data = getStoredData();
-        const newId = (data.requests.reduce((m, r) => Math.max(m, r.request_id || 0), 0) || 0) + 1;
-        const req = { request_id: newId, employee_id: u.employee_id, request_date: new Date().toISOString().slice(0, 10), reason: reason, status: 'PENDING', estimated_cost: est, approver_id: null, approval_date: null };
-        data.requests.push(req);
-        const itId = (data.itineraries.reduce((m, it) => Math.max(m, it.itinerary_id || 0), 0) || 0) + 1;
-        const it = { itinerary_id: itId, request_id: newId, type: document.getElementById('it_type').value || 'FLIGHT', departure_city: document.getElementById('from_city').value || '', arrival_city: document.getElementById('to_city').value || '', start_date: document.getElementById('start_date').value || '', end_date: document.getElementById('end_date').value || '', cost: parseFloat(document.getElementById('it_cost').value) || 0, notes: document.getElementById('it_notes').value || '' };
-        data.itineraries.push(it); Object.assign(MOCK_DATA, data); persistData();
-        document.getElementById('msg').style.display = 'block'; document.getElementById('msg').textContent = 'Request created id=' + newId; setTimeout(() => location = 'all_requests.html', 800);
-      });
-    })();
-  </script>
+<script>
+  (function () {
+    const u = getLoggedIn();
+    if (!u) { location = '/index.html'; return; }
+
+    document.getElementById('submit').addEventListener('click', function (e) {
+      e.preventDefault();
+
+      // Remove old errors
+      document.querySelectorAll('.error-text').forEach(el => el.remove());
+
+      let valid = true;
+
+      // Helper to show error beside field
+      function showError(id, msg) {
+        const input = document.getElementById(id);
+        const error = document.createElement('span');
+        error.className = 'error-text';
+        error.style.color = 'red';
+        error.style.marginLeft = '10px';
+        error.textContent = msg;
+        input.parentNode.insertBefore(error, input.nextSibling);
+        valid = false;
+      }
+
+      // Get values
+      const reason = document.getElementById('reason').value.trim();
+      const estCost = document.getElementById('est_cost').value.trim();
+      const type = document.getElementById('it_type').value.trim().toUpperCase();
+      const fromCity = document.getElementById('from_city').value.trim();
+      const toCity = document.getElementById('to_city').value.trim();
+      const startDate = document.getElementById('start_date').value;
+      const endDate = document.getElementById('end_date').value;
+      const itCost = document.getElementById('it_cost').value.trim();
+
+      // Simple field checks
+      if (!reason) showError('reason', 'Required');
+      if (!estCost || isNaN(estCost) || estCost <= 0) showError('est_cost', 'Invalid cost');
+      if (!type || !['FLIGHT', 'HOTEL', 'TRAIN'].includes(type)) showError('it_type', 'Use FLIGHT/HOTEL/TRAIN');
+      if (!fromCity) showError('from_city', 'Required');
+      if (!toCity) showError('to_city', 'Required');
+      if (!startDate) showError('start_date', 'Select start date');
+      if (!endDate) showError('end_date', 'Select end date');
+      if (startDate && endDate && new Date(startDate) > new Date(endDate)) showError('end_date', 'End date before start');
+      if (!itCost || isNaN(itCost) || itCost <= 0) showError('it_cost', 'Invalid cost');
+
+      // Show bottom message
+      const msg = document.getElementById('msg');
+      msg.style.display = 'block';
+      if (valid) {
+        msg.textContent = '✅ Form is valid! (No data will be saved)';
+        msg.className = 'message success';
+      } else {
+        msg.textContent = 'Please fix the errors above.';
+        msg.className = 'message error';
+      }
+    });
+  })();
+</script>
+
 </body>
 
 </html>

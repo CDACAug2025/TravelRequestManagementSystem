@@ -58,52 +58,65 @@
   <script src="../js/mock_data.js"></script>
   <script src="../js/shared.js"></script>
   <script>
-    (function () {
-      const u = getLoggedIn(); if (!u) { location = '/index.html'; return; }
-      document.getElementById('create').addEventListener('click', function () {
-        const data = getStoredData();
-        const fn = document.getElementById('first').value.trim();
-        const ln = document.getElementById('last').value.trim();
-        const email = document.getElementById('email').value.trim();
-        if (!fn || !ln || !email) { 
-          alert('Please fill all required fields'); 
-          return; 
-        }
-        const newId = (data.employees.reduce((m, e) => Math.max(m, e.employee_id || 0), 0) || 0) + 1;
-        const emp = { 
-          employee_id: newId, 
-          first_name: fn, 
-          last_name: ln, 
-          email: email, 
-          department_id: (parseInt(document.getElementById('dept').value) || 0), 
-          manager_id: (document.getElementById('manager').value ? parseInt(document.getElementById('manager').value) : null), 
-          department_name: document.getElementById('dept').value || '', 
-          role: document.getElementById('role').value || 'Employee' 
-        };
-        data.employees.push(emp);
-        data.login_credentials.push({ 
-          employee_id: newId, 
-          email: email, 
-          password: 'password123', 
-          role: emp.role 
-        });
-        Object.assign(MOCK_DATA, data); 
-        persistData();
-        
-        const msg = document.getElementById('msg');
-        msg.style.display = 'block'; 
+  (function () {
+    const u = getLoggedIn();
+    if (!u) {
+      location = '/index.html';
+      return;
+    }
+
+    document.getElementById('create').addEventListener('click', function (e) {
+      e.preventDefault();
+
+      // Remove old error messages
+      document.querySelectorAll('.error').forEach(el => el.remove());
+      document.querySelectorAll('input, select').forEach(el => el.classList.remove('invalid'));
+
+      let valid = true;
+
+      // Helper to show errors next to input
+      function showError(id, message) {
+        const input = document.getElementById(id);
+        input.classList.add('invalid');
+        const err = document.createElement('span');
+        err.className = 'error';
+        err.style.color = 'red';
+        err.style.marginLeft = '10px';
+        err.textContent = message;
+        input.parentNode.insertBefore(err, input.nextSibling);
+        valid = false;
+      }
+
+      const fn = document.getElementById('first').value.trim();
+      const ln = document.getElementById('last').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const dept = document.getElementById('dept').value.trim();
+      const manager = document.getElementById('manager').value.trim();
+      const role = document.getElementById('role').value;
+
+      // Validation checks
+      if (!fn) showError('first', 'Required');
+      if (!ln) showError('last', 'Required');
+      if (!email) showError('email', 'Required');
+      else if (!email.includes('@')) showError('email', 'Invalid email');
+      if (!dept) showError('dept', 'Required');
+      if (manager && isNaN(manager)) showError('manager', 'Must be a number');
+      if (!role) showError('role', 'Select a role');
+
+      // Show message box
+      const msg = document.getElementById('msg');
+      msg.style.display = 'block';
+      if (valid) {
+        msg.textContent = 'Form is valid! (No data will be saved)';
         msg.className = 'message success';
-        msg.textContent = 'Employee created successfully! Employee ID: ' + newId + ' (Default password: password123)';
-        
-        // Clear form
-        document.getElementById('first').value = '';
-        document.getElementById('last').value = '';
-        document.getElementById('email').value = '';
-        document.getElementById('dept').value = '';
-        document.getElementById('manager').value = '';
-      });
-    })();
-  </script>
+      } else {
+        msg.textContent = 'Please fix the errors above.';
+        msg.className = 'message error';
+      }
+    });
+  })();
+</script>
+
 </body>
 
 </html>

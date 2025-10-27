@@ -20,7 +20,25 @@
   </div>
   <script src="../js/mock_data.js"></script>
   <script src="../js/shared.js"></script>
-  <script src="../js/manager_info.js"></script>
+  <script>
+    (function () {
+  const u = getLoggedIn();
+  if (!u) {
+    location = '/index.html';
+    return;
+  }
+
+  const emp = findEmployeeById(u.employee_id);
+
+  document.getElementById('content').innerHTML = `
+    <p><strong>Name:</strong> ${emp.first_name} ${emp.last_name}</p>
+    <p><strong>Email:</strong> ${emp.email}</p>
+    <p><strong>Department:</strong> ${emp.department_name}</p>
+    <p><strong>Role:</strong> ${emp.role}</p>
+  `;
+})();
+
+  </script>
 </body>
 
 </html>

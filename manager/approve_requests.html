@@ -30,61 +30,86 @@
   <script src="../js/mock_data.js"></script>
   <script src="../js/shared.js"></script>
   <script>
-    (function () {
-      const u = getLoggedIn(); if (!u) { location = '/index.html'; return; }
-      const data = getStoredData();
-      const myPending = data.requests.filter(r => 
-        (r.approver_id === u.employee_id) || 
-        ((findEmployeeById(r.employee_id) || {}).manager_id === u.employee_id)
-      );
-      const el = document.getElementById('tableArea');
-      if (!myPending.length) { 
-        el.innerHTML += '<p class="message info">No requests pending approval.</p>'; 
-        return; 
-      }
-      let html = '<table><thead><tr><th>ID</th><th>Employee</th><th>Date</th><th>Reason</th><th>Status</th><th>Est Cost</th><th>Action</th></tr></thead><tbody>';
-      myPending.forEach(r => {
-        const emp = findEmployeeById(r.employee_id);
-        const statusClass = `status-${r.status.toLowerCase()}`;
-        html += `<tr>
+  (function () {
+    const u = getLoggedIn();
+    if (!u) { 
+      location = '/index.html'; 
+      return; 
+    }
+
+    const data = getStoredData();
+
+    // Filter requests assigned to this manager
+    const myPending = data.requests.filter(r => 
+      r.approver_id === u.employee_id ||
+      ((findEmployeeById(r.employee_id) || {}).manager_id === u.employee_id)
+    );
+
+    const el = document.getElementById('tableArea');
+
+    if (!myPending.length) { 
+      el.innerHTML += '<p class="message info">No requests pending approval.</p>'; 
+      return; 
+    }
+
+    // Build table
+    let html = `
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Employee</th>
+            <th>Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Est Cost</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    myPending.forEach(r => {
+      const emp = findEmployeeById(r.employee_id);
+      const statusClass = `status-${r.status.toLowerCase()}`;
+      html += `
+        <tr id="row${r.request_id}">
           <td>${r.request_id}</td>
           <td>${emp.first_name} ${emp.last_name}</td>
           <td>${r.request_date}</td>
           <td>${r.reason}</td>
-          <td id="st${r.request_id}"><span class="status-badge ${statusClass}">${r.status}</span></td>
+          <td id="st${r.request_id}">
+            <span class="status-badge ${statusClass}">${r.status}</span>
+          </td>
           <td>₹${r.estimated_cost.toFixed(2)}</td>
           <td class="actions">
-            <button onclick="decide(${r.request_id},true)" class="btn success small">Approve</button>
-            <button onclick="decide(${r.request_id},false)" class="btn danger small">Reject</button>
+            <button onclick="updateStatus(${r.request_id}, true)" class="btn success small">Approve</button>
+            <button onclick="updateStatus(${r.request_id}, false)" class="btn danger small">Reject</button>
           </td>
-        </tr>`;
-      });
-      html += '</tbody></table>';
-      el.innerHTML += html;
-      
-      window.decide = function (id, approve) {
-        const data = getStoredData();
-        const r = data.requests.find(x => x.request_id === id);
-        if (!r) return alert('Request not found');
-        r.status = approve ? 'APPROVED' : 'REJECTED';
-        r.approver_id = u.employee_id;
-        r.approval_date = new Date().toISOString().slice(0, 10);
-        Object.assign(MOCK_DATA, data); 
-        persistData();
-        
-        const statusCell = document.getElementById('st' + id);
-        const statusClass = `status-${r.status.toLowerCase()}`;
-        statusCell.innerHTML = `<span class="status-badge ${statusClass}">${r.status}</span>`;
-        
-        // Show confirmation message
-        const message = document.createElement('div');
-        message.className = `message ${approve ? 'success' : 'error'}`;
-        message.textContent = `Request #${id} ${approve ? 'approved' : 'rejected'} successfully!`;
-        document.getElementById('tableArea').appendChild(message);
-        setTimeout(() => message.remove(), 3000);
-      };
-    })();
-  </script>
+        </tr>
+      `;
+    });
+
+    html += '</tbody></table>';
+    el.innerHTML += html;
+
+    // Simple function to visually change status only
+    window.updateStatus = function (id, approve) {
+      const cell = document.getElementById('st' + id);
+      const newStatus = approve ? 'APPROVED' : 'REJECTED';
+      const statusClass = `status-${newStatus.toLowerCase()}`;
+      cell.innerHTML = `<span class="status-badge ${statusClass}">${newStatus}</span>`;
+
+      // Optional confirmation message
+      const message = document.createElement('div');
+      message.className = `message ${approve ? 'success' : 'error'}`;
+      message.textContent = `Request #${id} ${approve ? 'approved' : 'rejected'}. (Not saved)`;
+      document.getElementById('tableArea').appendChild(message);
+      setTimeout(() => message.remove(), 3000);
+    };
+  })();
+</script>
+
 </body>
 
 </html>

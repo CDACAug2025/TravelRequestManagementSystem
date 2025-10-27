@@ -314,6 +314,4 @@ const MOCK_DATA = {
   }
 })();
 
-function saveMockData(){
-  localStorage.setItem('MOCK_DATA_full', JSON.stringify(MOCK_DATA));
-}
+
