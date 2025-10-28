@@ -123,27 +123,13 @@ header {
   border-radius: var(--border-radius);
   transition: var(--transition);
   position: relative;
+  background-color:  rgba(200, 200, 200, 0.15) ;
 }
 
 .nav-menu a:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.35);
 }
 
-.nav-menu a::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
-  background: white;
-  transition: var(--transition);
-}
-
-.nav-menu a:hover::after {
-  width: 80%;
-}
 
 .hamburger {
   display: none;
@@ -806,7 +792,7 @@ header {
 }
 
 .testimonial {
-  display: none;
+  /* display: ; */
   background: var(--light);
   padding: 3rem;
   border-radius: var(--border-radius-lg);
@@ -853,38 +839,6 @@ header {
   text-align: left;
 }
 
-.carousel-controls {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-.carousel-btn {
-  background: var(--primary);
-  color: white;
-  border: none;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--transition);
-  pointer-events: all;
-  box-shadow: var(--shadow);
-}
-
-.carousel-btn:hover {
-  background: var(--primary-dark);
-  transform: scale(1.1);
-}
-
 /* ==============================
    FAQ Section
    ============================== */
@@ -927,15 +881,6 @@ header {
   background: var(--gray-lighter);
 }
 
-.faq-question h4 {
-  color: var(--dark);
-  font-weight: 600;
-}
-
-.faq-question i {
-  color: var(--primary);
-  transition: var(--transition);
-}
 
 .faq-answer {
   padding: 0 1.5rem;
@@ -944,14 +889,6 @@ header {
   transition: var(--transition);
 }
 
-.faq-item.active .faq-answer {
-  padding: 0 1.5rem 1.5rem;
-  max-height: 200px;
-}
-
-.faq-item.active .faq-question i {
-  transform: rotate(180deg);
-}
 
 /* ==============================
    Footer
@@ -1060,18 +997,6 @@ footer {
   margin: 0 auto;
 }
 
-/* ==============================
-   Animations
-   ============================== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
 
 /* ==============================
    Responsive Design

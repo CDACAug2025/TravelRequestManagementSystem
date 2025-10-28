@@ -77,27 +77,6 @@ body::before {
   overflow: hidden;
 }
 
-.header::before {
-  content: "";
-  position: absolute;
-  top: -30%;
-  right: -5%;
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-  border-radius: 50%;
-}
-
-.header::after {
-  content: "";
-  position: absolute;
-  bottom: -40%;
-  left: -10%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
-  border-radius: 50%;
-}
 
 .header h2 {
   font-family: 'Montserrat', sans-serif;
@@ -131,20 +110,21 @@ nav a {
   backdrop-filter: blur(5px);
 }
 
-nav a:not(.logout)::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 3px;
-  background: linear-gradient(to right, #10b981, #a5f3fc);
+nav a:hover {
+  color: rgb(171, 220, 230);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--border-radius);
   transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
 }
 
-nav a:not(.logout):hover::after {
-  width: 100%;
-}
+
+
 
 nav a.logout {
   background: rgba(255, 255, 255, 0.2);
@@ -199,9 +179,7 @@ th {
   position: relative;
 }
 
-tr:nth-child(even) {
-  background-color: rgba(240, 253, 250, 0.5);
-}
+
 
 tr:hover {
   background-color: rgba(8, 145, 178, 0.05);
